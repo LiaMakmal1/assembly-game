@@ -1,31 +1,20 @@
-# Assembly Game Project
+# Assembly maze game
 
-This repository contains an old project written in Assembly language (TASM).
+A Pac-Man-style maze game written in x86 assembly (TASM, IDEAL mode) for DOS, built in high school. Collect every dot on the board while staying away from the ghosts: each dot is worth one point, and eating all of them wins the game.
 
-## Project Description
+## How it works
 
-- **File:** `base.asm`
-- **Language:** x86 Assembly
-- **Assembler:** TASM (Turbo Assembler)
-- **Year Created:** ~3 years ago
+- **Graphics:** VGA mode 13h (320×200, 256 colors). The board, player and ghosts are drawn pixel by pixel through BIOS video interrupts (`int 10h`), with sprites stored as coordinate tables.
+- **Collision detection:** before each move the game reads the color of the target pixels (`int 10h`, read-pixel), so walls, dots and ghosts are told apart by color.
+- **Game flow:** start screen with instructions, live score, a win screen when all dots are eaten, and a game-over screen with the final score and a play-again prompt.
+- No external libraries: everything is done with DOS and BIOS interrupts.
 
-This project demonstrates basic low-level programming concepts:
-- Direct memory access
-- Low-level graphics (text mode)
-- Game logic without external libraries
+## How to run
 
-## How to Build
+You need [DOSBox](https://www.dosbox.com/) and Turbo Assembler (TASM). Inside DOSBox, from the folder with `base.asm`:
 
-To build and run the project:
-
-1. Assemble the file:
-2. Link the object file:
-3. Run the executable:
-
-*(You can use DOSBox if you are running on a modern system.)*
-
-## Notes
-
-- Only the source file `base.asm` is included.
-- All compiled files (`.exe`, `.obj`, etc.) have been removed from the repository to keep it clean.
-- Project is private and preserved for archival/educational purposes.
+```
+tasm base.asm
+tlink base.obj
+base.exe
+```
